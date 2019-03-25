@@ -1,12 +1,15 @@
 language: go
- 
 go:
-  - 1.12
- 
+- 1.12
 sudo: false
- 
 install:
-  - echo "install"
- 
+- echo "install"
 script:
-  - echo "script"
+- echo "script"
+before_install:
+- openssl aes-256-cbc -K $encrypted_dbd3b97979bf_key -iv $encrypted_dbd3b97979bf_iv
+  -in id_rsa.enc -out ~\/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- echo -e "Host 主机IP\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+addons:
+	ssh_known_hosts: 202.120.40.90

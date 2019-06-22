@@ -1,6 +1,6 @@
 # DALab_Web
 
-[![Build Status](http://192.168.1.133:8080/buildStatus/icon?job=se-course)](http://192.168.1.133:8080/job/se-course/)
+[![Build Status](http://dalab.se.sjtu.edu.cn:8090/buildStatus/icon?job=se-course)](https://github.com/wanghehv1996/SoftwareInnovationClass)
 
 
 ## 需求

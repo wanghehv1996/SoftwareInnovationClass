@@ -171,7 +171,7 @@ kubectl create namespace sock-shop
 kubectl apply -n sock-shop -f "https://github.com/microservices-demo/microservices-demo/blob/master/deploy/kubernetes/complete-demo.yaml?raw=true"
 ```
 部署完成以后，用`kubectl -n sock-shop get svc front-end`查看部署端口，访问如果正常说明配置ok。
-
+卸载 `kubectl delete namespace sock-shop`
 [ref:install](https://juejin.im/post/5b8a4536e51d4538c545645c#heading-18)
 
 7. 加入其他节点

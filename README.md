@@ -1,5 +1,8 @@
 # DALab_Web
 
+[![Build Status](http://192.168.1.133:8080/buildStatus/icon?job=se-course)](http://192.168.1.133:8080/job/se-course/)
+
+
 ## 需求
 
 * 前端

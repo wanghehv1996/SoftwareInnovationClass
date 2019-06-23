@@ -1,24 +1,24 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: se-course
+  name: se-course-front-end
   labels:
-    name: se-course
+    name: se-course-front-end
   namespace: se-dalab
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: se-course
+        name: se-course-front-end
     spec:
       # Make the service externally visible via the node
       containers:
-      - name: se-course
-        image: se-course
+      - name: se-course-front-end
+        image: se-course-front-end
         imagePullPolicy: Never
         ports:
-        - name: se-course
+        - name: se-course-front-end
           containerPort: 8081
         securityContext:
           capabilities:
@@ -42,9 +42,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: se-course
+  name: se-course-front-end
   labels:
-    name: se-course
+    name: se-course-front-end
   namespace: se-dalab
 spec:
   type: NodePort
@@ -53,5 +53,62 @@ spec:
     targetPort: 8081
     nodePort: 30002
   selector:
-    name: se-course
+    name: se-course-front-end
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: se-course-people
+  labels:
+    name: se-course-people
+  namespace: se-dalab
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: se-course-people
+    spec:
+      # Make the service externally visible via the node
+      containers:
+      - name: se-course-people
+        image: se-course-people
+        imagePullPolicy: Never
+        ports:
+        - name: se-course-people
+          containerPort: 8082
+        securityContext:
+          capabilities:
+            drop:
+              - all
+            add:
+              - CHOWN
+              - SETGID
+              - SETUID
+          readOnlyRootFilesystem: false
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory
+     # nodeSelector:
+      #  beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: se-course-people
+  labels:
+    name: se-course-people
+  namespace: se-dalab
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8082
+    nodePort: 30003
+  selector:
+    name: se-course-people
 ---

@@ -196,6 +196,17 @@ etcdctl del "" --prefix
 
 ## Docker
 
+### Build image
+
+通过写 Dockerfile 为每一个微服务创建 image。其中 front-end 使用了 react 框架。因此在前段 build 过程中，需要安装部分依赖包。若每次 docker build 都从干净的 node image 上做，需要每次下载依赖包，十分耗时。因此，我们在 dockerfile 中通过提前单独 COPY package.json 和 package-lock.json 文件，进行 `npm install`。利用 docker 缓存 build 镜像，加速镜像构建。
+
+由于涉及到 node 和 go 两个依赖包，需要使用 multistage build。构建完前段工程后，仅需保留build输出即可，我们将该输出直接复制到 go 基础镜像上，再进一步配置 go 相关配置即可。具体脚本代码请参考 `front-end/Dockerfile` 与 `people/Dockerfile` 两个文件。
+
+我们发现，构建完的镜像大小达到700+MB。按道理，go组件的大小应该比较小。我们可以通过从go基础镜像中复制必要go环境至空镜像中，进一步优化减少镜像大小。
+
+[ref:multistage-build](https://docs.docker.com/develop/develop-images/multistage-build/)
+
+
 ### Docker registry
 
 使用如下指令在本地启动registry容器，暴露5000端口

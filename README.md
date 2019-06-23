@@ -234,3 +234,15 @@ cat <path-to-image>/se-course-image | pv | bunzip2 | docker load
 项目在打包机(部署Jenkins的机器)上 build，然后需要在另一台节点机器上进行部署。我们使用 Jenkins 插件 SSH publisher 来实现这个目标。安装插件后，配置免密登陆。将打包好的Docker镜像和 yaml 部署文件传输到节点机器，在节点机器上执行 `docker load` 和 相关kubectl部署指令即可。
 
 [ref:ssh_publisher_install](https://blog.csdn.net/houyefeng/article/details/51027885)
+
+
+## Jaeger
+
+### Installation
+配置好 kubernetes 后，直接安装即可。
+```
+kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kubernetes/master/all-in-one/jaeger-all-in-one-template.yml
+```
+通过 `localhost:32343` 访问即可，如下图所示。
+
+![jeager](./doc/images/jeager.png)

@@ -13,7 +13,7 @@ RUN npm install
 RUN npm run build
 
 
-FROM golang:1.12
+FROM golang:1.12-alpine
 RUN mkdir /app
 COPY --from=0 /dalab-fe/build /app/build
 COPY main.go /app/main.go

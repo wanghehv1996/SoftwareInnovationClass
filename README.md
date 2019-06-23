@@ -164,6 +164,21 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiw
 完全按照参考教程即可。镜像使用阿里云`registry.cn-hangzhou.aliyuncs.com/google_containers/`
 [ref:install](https://www.cnblogs.com/ding2016/p/10786252.html)
 
+需要调整metric-server的刷新频率，则需要修改拉取的目录中的`metrics-server/deploy/1.8+/metrics-server-deployment.yaml`文件，添加刷新频率的一行
+
+```
+      - name: metrics-server
+        image: registry.cn-hangzhou.aliyuncs.com/google_containers/metrics-server-amd64:v0.3.3 # use aliyun mirror
+        imagePullPolicy: Always
+        command:
+        - /metrics-server
+        -  --metric-resolution=5s # add this row
+        -  --kubelet-preferred-address-types=InternalIP
+        -  --kubelet-insecure-tls
+```
+
+注意:修改了metric-resolution后，可以通过`kubectl get --raw "/apis/metrics.k8s.io/v1beta1/nodes"`来看试试监测的情况
+
 7. 测试集群
 使用官方的demo sock shop
 ```

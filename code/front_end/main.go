@@ -27,7 +27,7 @@ func main() {
             fp = filepath.Join(fp, "index.html")}
         tmpl, _ := template.ParseFiles(fp)
         tmpl.Execute(w, nil)
-    }
+    })
 
     fmt.Println(http.ListenAndServe(":8081", nil));
 }

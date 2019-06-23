@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
 import { List,Avatar } from 'antd';
-const axios = require('axios');
 import './people.css'
+const axios = require('axios');
+
 
 const serverRoot = "";
 

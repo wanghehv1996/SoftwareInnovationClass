@@ -21,10 +21,13 @@ func main() {
         http.StripPrefix("/static/", http.FileServer(http.Dir("build/static"))))
 
     http.HandleFunc("/" , func(w http.ResponseWriter, r *http.Request) {
+        l := len(r.URL.Path)
         fp := filepath.Join("build", filepath.Clean(r.URL.Path))
+        if l<=5 || r.URL.Path[l-5 : ] != ".html" {
+            fp = filepath.Join(fp, "index.html")}
         tmpl, _ := template.ParseFiles(fp)
         tmpl.Execute(w, nil)
-    })
+    }
 
     fmt.Println(http.ListenAndServe(":8081", nil));
 }

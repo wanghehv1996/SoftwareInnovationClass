@@ -246,3 +246,49 @@ kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kuberne
 通过 `localhost:32343` 访问即可，如下图所示。
 
 ![jeager](./doc/images/jeager.png)
+
+## HAProxy
+
+### Installation
+
+通过apt get安装haproxy。
+
+```
+sudo apt-get install -y haproxy
+```
+
+### Configuration
+
+默认的haproxy配置文件目录在`/etc/haproxy/haproxy.cfg`中，打开文件，添加如下内容
+
+```
+frontend httpsfront
+        bind *:78
+        mode tcp
+        default_backend httpsback
+backend httpsback
+        mode tcp
+        balance roundrobin
+        stick-table type ip size 200k expire 30m
+        stick on src
+        server node1 [IP:port] check
+	server node2 [IP:port] check
+```
+
+这里实现了一个https请求的负载平衡。前端监听来自端口78的请求，并由后端httpsback转发请求。这里使用roundrobin方法，在提供的两个服务器node1和node2上进行负载平衡（node1的名字和真实节点无关）
+
+### Start HAProxy
+
+启动服务
+
+```
+sudo service haproxy start
+```
+
+检查服务状态
+
+```
+systemctl status haproxy.service
+```
+
+正确启动后，便可以通过上述的78端口访问服务，并且多个请求可以被平衡转发到不同服务器上

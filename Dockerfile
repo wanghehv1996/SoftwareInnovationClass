@@ -7,6 +7,7 @@ RUN mkdir /app
 COPY code/static /app/static
 COPY code/templates /app/templates
 COPY code/main.go /app/main.go
+COPY code/build /app/build
 
 # Set the working directory to the app directory
 WORKDIR /app

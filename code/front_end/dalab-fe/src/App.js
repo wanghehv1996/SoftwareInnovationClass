@@ -36,7 +36,7 @@ class App extends Component {
         <Router>
           <div>
             <Header dataSource={Nav00DataSource} isMobile={this.isMobile} />
-            <Route exact path="/" component={Home} />
+            <Route exact path="/index" component={Home} />
             <Route exact path="/about" component={About} />
             <Route exact path="/people" component={People} />
             <Footer isMobile={this.isMobile} />

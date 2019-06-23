@@ -1,0 +1,52 @@
+@import './default';
+
+@padding-space: 120px;
+
+footer.dark {
+  background-color: #000;
+  color: rgba(255, 255, 255, 0.65);
+  a {
+    color: #fff;
+  }
+  h2 {
+    color: rgba(255, 255, 255, 1);
+    & > span {
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+  .bottom-bar {
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    overflow: hidden;
+  }
+}
+
+footer {
+  border-top: 1px solid @border-color;
+  clear: both;
+  bottom: 0px;
+  position: fixed;
+  width: 100%;
+  font-size: 14px;
+  background: #ffffff;
+  z-index: 1000;
+  color: @site-text-color;
+  box-shadow: 0 1000px 0 1000px #fff;
+  .bottom-bar {
+    border-top: 1px solid @border-color;
+    text-align: right;
+    padding: 20px @padding-space;
+    margin: 0;
+    line-height: 20px;
+    a {
+      color: rgba(255, 255, 255, 0.8);
+      &:hover {
+        color: #fff;
+      }
+    }
+    .translate-button {
+      text-align: left;
+      width: 200px;
+      margin: 0 auto;
+    }
+  }
+}

@@ -28,7 +28,7 @@ spec:
       # Make the service externally visible via the node
       containers:
       - name: front-end
-        image: front-end
+        image: se-course-front-end
         imagePullPolicy: Never
         ports:
         - name: front-end

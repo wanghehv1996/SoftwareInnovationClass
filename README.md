@@ -258,7 +258,64 @@ kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-kuberne
 
 ![jeager](./doc/images/jeager.png)
 
+## Ingress-Nginx
+
+Ingress-Nginx用于统一转发请求到服务。
+
+### Installation
+
+安装
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+```
+
+### Configuration
+
+1. 开启NodePort提供访问
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/baremetal/service-nodeport.yaml
+```
+
+2. 检查容器状态
+
+```
+kubectl get pods --all-namespaces -l app.kubernetes.io/name=ingress-nginx --watch
+```
+
+3. 创建ingress配置文件
+
+```
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: se-dalab # same as service namespace
+  annotations:
+    # use the shared ingress-nginx
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/add-base-url: "true"
+spec:
+  rules:
+   - http:
+       paths:
+       - path: /web/*
+         backend:
+           serviceName: se-course
+           servicePort: 80
+       - path:
+         backend:
+           serviceName: se-course
+           servicePort: 80
+```
+
+4. 开启ingress
+
 ## HAProxy
+
+通过HAProxy可以便捷地实现多个服务器之间的负载平衡
 
 ### Installation
 
@@ -286,7 +343,7 @@ backend httpsback
 	server node2 [IP:port] check
 ```
 
-这里实现了一个https请求的负载平衡。前端监听来自端口78的请求，并由后端httpsback转发请求。这里使用roundrobin方法，在提供的两个服务器node1和node2上进行负载平衡（node1的名字和真实节点无关）
+这里实现了一个https请求的负载平衡。前端监听来自端口78的请求，并由后端httpsback转发请求。这里使用roundrobin方法，在提供的两个服务器node1和node2上进行负载平衡（node1的名字和真实节点无关）。可以将此处的server填写成上一步中的ingress service的地址。
 
 ### Start HAProxy
 

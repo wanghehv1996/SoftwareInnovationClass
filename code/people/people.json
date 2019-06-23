@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Yang Xubo", 
+        "title": "Professor", 
+        "avatarURL": "201611072032216063.jpg", 
+        "email": "yangxubo@sjtu.edu.cn"
+    }, 
+    {
+        "name": "Wang Hui", 
+        "title": "Master", 
+        "avatarURL": "w.png", 
+        "email": "wanghehv@sjtu.edu.cn"
+    }, 
+    {
+        "name": "Xiao Yuwei", 
+        "title": "Master", 
+        "avatarURL": "x.png", 
+        "email": "xiaoyuwei@sjtu.edu.cn"
+    }, 
+    {
+        "name": "Zou Yue", 
+        "title": "Master", 
+        "avatarURL": "z.png", 
+        "email": "zouyue@sjtu.edu.cn"
+    }, 
+    {
+        "name": "Chen Jiacheng", 
+        "title": "Master", 
+        "avatarURL": "c.jpg", 
+        "email": "jc_chen@sjtu.edu.cn"
+    }
+]

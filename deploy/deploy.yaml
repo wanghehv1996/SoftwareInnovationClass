@@ -13,7 +13,6 @@ spec:
         name: se-course
     spec:
       # Make the service externally visible via the node
-      type: NodePort 
       containers:
       - name: se-course
         image: se-course

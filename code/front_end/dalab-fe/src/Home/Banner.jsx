@@ -4,7 +4,7 @@ import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import BannerSVGAnim from './component/BannerSVGAnim';
 import { Typography } from 'antd';
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 function Banner(props) {
   return (

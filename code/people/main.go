@@ -7,7 +7,7 @@ import (
 
 func main() {
     http.Handle("/img/",
-        http.StripPrefix("/img/", http.FileServer(http.Dir("build/static"))))
+        http.StripPrefix("/img/", http.FileServer(http.Dir("img"))))
 
     http.HandleFunc("/" , func(w http.ResponseWriter, r *http.Request) {
         if r.URL.Path == "/people.json" {

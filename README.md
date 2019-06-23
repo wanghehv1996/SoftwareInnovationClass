@@ -180,6 +180,10 @@ kubeadm join --token <token> <master-ip>:<master-port> --discovery-token-ca-cert
 ```
 用`kubectl get nodes`查看新加入的机器
 
+8. 部署集群
+
+[ref:port](https://www.jianshu.com/p/75af95641c91), [ref:port](https://blog.csdn.net/xinghun_4/article/details/50492041), 
+[ref:image_pull_policy](https://www.cnblogs.com/flying1819/articles/8311342.html)
 
 ### Others
 
@@ -189,3 +193,44 @@ kubeadm reset
 etcdctl del "" --prefix
 ```
 [reference](https://k8smeetup.github.io/docs/reference/setup-tools/kubeadm/kubeadm-reset/)
+
+## Docker
+
+### Docker registry
+
+使用如下指令在本地启动registry容器，暴露5000端口
+```
+docker run -d -p 5000:5000 --restart=always --name registry registry:2
+```
+具体如何将本地image发布到registry可参考教程。但是Docker registry在本地局域网也需要域名和https证书验证，因此实际部署中使用更简单的 `docker save, docker load`来实现image在本地的共享。
+
+[ref:install](https://docs.docker.com/registry/deploying/)
+
+### Docker image share in LAN network
+
+先通过本地将build好的image打包到文件。使用`bzip2`压缩，`pv`可视化进度。
+```
+docker save se-course | bzip2 | pv | cat se-course-image
+```
+使用jenkins将文件从打包机传输到节点，并执行解压缩，load到docker
+```
+cat <path-to-image>/se-course-image | pv | bunzip2 | docker load
+```
+
+## Jenkins
+
+### Installation
+
+参考[教程](https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-ubuntu-16-04)按步骤即可。其中防火墙一般不需要设置。
+
+### Github Webhook
+
+1. Jenkins 中下载 github 插件，需要配置一些 auth token。
+
+2. 在 github 项目 Setting->Webhook 中添加 Jenkins 服务器信息。URL 一般为 `hostname:port/github-webhook/`，注意最后的斜杠不能少。
+
+### SSH publish
+
+项目在打包机(部署Jenkins的机器)上 build，然后需要在另一台节点机器上进行部署。我们使用 Jenkins 插件 SSH publisher 来实现这个目标。安装插件后，配置免密登陆。将打包好的Docker镜像和 yaml 部署文件传输到节点机器，在节点机器上执行 `docker load` 和 相关kubectl部署指令即可。
+
+[ref:ssh_publisher_install](https://blog.csdn.net/houyefeng/article/details/51027885)

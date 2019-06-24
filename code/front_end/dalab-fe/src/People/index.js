@@ -1,67 +1,66 @@
 import React,{Component} from 'react';
 import { List,Avatar } from 'antd';
 import './people.css'
-const axios = require('axios');
+const serverRoot = "http://dalab.se.sjtu.edu.cn:78/";
+const fakeDataUrl = serverRoot + "people.json";
+// const data = [
+//     {
+//         name: "Yang Xubo",
+//         title: "Professor",
+//         avatarURL: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+//         email:"yangxubo@sjtu.edu.cn"
+//     },
+//     {
+//         name: "Yang Xubo",
+//         title: "Professor",
+//         avatarURL: ""
+//     },
+//     {
+//         name: "Yang Xubo",
+//         title: "Professor",
+//         avatarURL: ""
+//     },
+//     {
+//         name: "Yang Xubo",
+//         title: "Professor",
+//         avatarURL: ""
+//     },
+//     {
+//         name: "Yang Xubo",
+//         title: "Professor",
+//         avatarURL: ""
+//     },
+//     {
+//         name: "Yang Xubo",
+//         title: "Professor",
+//         avatarURL: ""
+//     }
+// ]
 
-
-const serverRoot = "";
-
-const data = [
-    {
-        name: "Yang Xubo",
-        title: "Professor",
-        avatarURL: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-        email:"yangxubo@sjtu.edu.cn"
-    },
-    {
-        name: "Yang Xubo",
-        title: "Professor",
-        avatarURL: ""
-    },
-    {
-        name: "Yang Xubo",
-        title: "Professor",
-        avatarURL: ""
-    },
-    {
-        name: "Yang Xubo",
-        title: "Professor",
-        avatarURL: ""
-    },
-    {
-        name: "Yang Xubo",
-        title: "Professor",
-        avatarURL: ""
-    },
-    {
-        name: "Yang Xubo",
-        title: "Professor",
-        avatarURL: ""
-    }
-]
-const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
 
 export default class People extends Component{
-    // state = {
-    //     data: [],
-    // };
+    constructor(props) {
+        super(props);
+        this.state = {data: undefined};
+    }
 
-    // componentDidMount() {
-    //     this.fetchData(res => {
-    //         this.setState({
-    //             data: res.results,
-    //         });
-    //     });
-    // }
+    componentDidMount() {
+        const that = this;
+        fetch(new Request(fakeDataUrl, {
+                mode: 'cors'
+            }))
+            .then(function (response) {
+                // Convert to JSON
+                return response.json();
+            }).then(function (j) {
+                that.setState({
+                    data:j
+                })
+            }).catch(function (error) {
+                console.log('Request failed', error)
+            });
+    }
 
-    // fetchData = callback => {
-    //    axios.get(fakeDataUrl).then(function (response) {
-    //         console.log(response);
-    //     }).catch(function (error) {
-    //         console.log(error);
-    //     });
-    // };
-    
     render(){
         return(
             <div id="card" className="Container">
@@ -75,14 +74,14 @@ export default class People extends Component{
                         xl: 4,
                         xxl: 6,
                     }}
-                    dataSource={data}
+                    dataSource={this.state.data}
                     renderItem={item => (
                         <List.Item>
                             <List.Item.Meta
                                 avatar={
-                                    <Avatar src={item.avatarURL} />
+                                    <Avatar src={serverRoot+"img/"+ item.avatarURL} />
                                 }
-                                title={<a href={"Mailto:zouyue1024@163.com"}>{item.name}</a>}
+                                title={<a href={"Mailto:"+item.email}>{item.name}</a>}
                                 description={item.title}
                             />
                         </List.Item>

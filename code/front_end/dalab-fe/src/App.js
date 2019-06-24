@@ -7,6 +7,7 @@ import Footer from './Home/Footer';
 import Home from './Home';
 import About from "./About";
 import People from './People';
+import Publications from "./Pubs"
 
 import {
   Nav00DataSource,
@@ -36,9 +37,11 @@ class App extends Component {
         <Router>
           <div>
             <Header dataSource={Nav00DataSource} isMobile={this.isMobile} />
+            <Route exact path="/" component={Home} />
             <Route exact path="/index" component={Home} />
             <Route exact path="/about" component={About} />
             <Route exact path="/people" component={People} />
+            <Route exact path="/pubs" component={Publications} />
             <Footer isMobile={this.isMobile} />
           </div>
         </Router>

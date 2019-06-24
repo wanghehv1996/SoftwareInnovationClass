@@ -11,7 +11,8 @@ func main() {
 
     http.HandleFunc("/" , func(w http.ResponseWriter, r *http.Request) {
         if r.URL.Path == "/people.json" {
-        http.ServeFile(w, r, "people.json")
+            w.Header().Set("Access-Control-Allow-Origin", "*")
+            http.ServeFile(w, r, "people.json")
         }
     })
 

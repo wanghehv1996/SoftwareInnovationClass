@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Icon, Menu, Button, Popover } from 'antd';
+import { Row, Col, Icon, Menu, Popover } from 'antd';
 import { enquireScreen } from 'enquire-js';
 import logo from './../logo.svg';
 import {Link} from "react-router-dom";
@@ -20,7 +20,7 @@ class Header extends React.Component {
     const { menuMode, menuVisible } = this.state;
 
     const menu = (
-      <Menu mode={menuMode} id="nav" key="nav">
+      <Menu mode={menuMode} id="nav" key="nav" defaultSelectedKeys={["home"]}>
         <Menu.Item key="home">
           <Link
             href={this.props.dataSource.menu.children[0].a.href}

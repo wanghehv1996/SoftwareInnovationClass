@@ -194,6 +194,15 @@ etcdctl del "" --prefix
 ```
 [reference](https://k8smeetup.github.io/docs/reference/setup-tools/kubeadm/kubeadm-reset/)
 
+
+2. autoscale
+
+```
+kubectl autoscale deployment front-end -n se-dalab --cpu-percent=50 --min=1 --max=10
+```
+测试如下图所示，模拟大量向主页发起的常规请求，可以发现 front-end pod 会自动增加 replica 至 3 个。
+![autoscale](doc/images/autoscale.png)
+
 ## Docker
 
 ### Build image
@@ -234,6 +243,11 @@ cat <path-to-image>/se-course-image | pv | bunzip2 | docker load
 
 参考[教程](https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-ubuntu-16-04)按步骤即可。其中防火墙一般不需要设置。
 
+安装完以后的主界面如下所示。
+
+![jenkins](doc/images/jenkins.png)
+
+
 ### Github Webhook
 
 1. Jenkins 中下载 github 插件，需要配置一些 auth token。
@@ -243,6 +257,10 @@ cat <path-to-image>/se-course-image | pv | bunzip2 | docker load
 ### SSH publish
 
 项目在打包机(部署Jenkins的机器)上 build，然后需要在另一台节点机器上进行部署。我们使用 Jenkins 插件 SSH publisher 来实现这个目标。安装插件后，配置免密登陆。将打包好的Docker镜像和 yaml 部署文件传输到节点机器，在节点机器上执行 `docker load` 和 相关kubectl部署指令即可。
+
+如下为部分配置截图。
+
+![ssh_publisher](doc/images/ssh_publisher.png)
 
 [ref:ssh_publisher_install](https://blog.csdn.net/houyefeng/article/details/51027885)
 

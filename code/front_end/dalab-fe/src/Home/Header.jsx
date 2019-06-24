@@ -66,15 +66,15 @@ class Header extends React.Component {
             overlayClassName="popover-menu"
             placement="bottomRight"
             content={menu}
-            trigger="click"
+            trigger="hover"
             visible={menuVisible}
             arrowPointAtCenter
-            onVisibleChange={this.onMenuVisibleChange}
+            onVisibleChange={this.onMenuVisibleChange.bind(this)}
           >
             <Icon
               className="nav-phone-icon"
               type="menu"
-              onClick={this.handleShowMenu}
+              onClick={this.handleShowMenu.bind(this)}
             />
           </Popover>
         ) : null}
@@ -93,6 +93,19 @@ class Header extends React.Component {
         </Row>
       </div>
     );
+  }
+
+
+  handleShowMenu() {
+    this.setState({
+      menuVisible: !this.state.menuVisible
+    })
+  };
+
+  onMenuVisibleChange() {
+    this.setState({
+      menuVisible: !this.state.menuVisible
+    })
   }
 }
 

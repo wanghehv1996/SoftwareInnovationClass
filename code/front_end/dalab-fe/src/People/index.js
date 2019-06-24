@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import { List,Avatar } from 'antd';
 import './people.css'
-const serverRoot = "http://192.168.1.104:30003/";
+const serverRoot = "http://dalab.se.sjtu.edu.cn:78/";
 const fakeDataUrl = serverRoot + "people.json";
 // const data = [
 //     {
@@ -81,7 +81,7 @@ export default class People extends Component{
                                 avatar={
                                     <Avatar src={serverRoot+"img/"+ item.avatarURL} />
                                 }
-                                title={<a href={"Mailto:zouyue1024@163.com"}>{item.name}</a>}
+                                title={<a href={"Mailto:"+item.email}>{item.name}</a>}
                                 description={item.title}
                             />
                         </List.Item>

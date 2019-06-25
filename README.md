@@ -2,6 +2,13 @@
 
 [![Build Status](http://dalab.se.sjtu.edu.cn:8090/buildStatus/icon?job=se-course)](https://github.com/wanghehv1996/SoftwareInnovationClass)
 
+Chen Jiacheng	118037010018
+
+Wang Hui		118037910009
+
+Xiao Yuwei		118037910061
+
+Zou Yue			118037910072
 
 ## 需求
 
